@@ -1,6 +1,6 @@
 import os
 from ingest import ingest_data
-from transform import transform_data
+from transform import transform_data, validate_data
 from load import load_data
 from logger import setup_logger
 
@@ -19,7 +19,11 @@ def run_pipeline():
     df_transformed = transform_data(df)
     logger.info("Transformation completed")
 
-    # Step 3: Load
+    # Step 3: Validate
+    validate_data(df_transformed)
+    logger.info("Data validation completed")
+
+    # Step 4: Load
     load_data(df_transformed, processed_file_path)
     logger.info("Loading completed")
 

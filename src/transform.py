@@ -30,3 +30,12 @@ def transform_data(df):
 
     print("✅ Transformation completed.")
     return df
+
+def validate_data(df):
+    if df.empty:
+        raise ValueError("Dataset is empty!")
+    
+    if df["Sales"].isnull().sum() > 0:
+        raise ValueError("Sales column contain null values!")
+    
+    print("Data validation passed")
