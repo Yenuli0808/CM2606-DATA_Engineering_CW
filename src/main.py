@@ -8,8 +8,8 @@ def run_pipeline():
     logger = setup_logger()
     logger.info("Pipeline started")
 
-    raw_file_path = os.path.join("..","Dataset", "superstore.csv")
-    processed_file_path = os.path.join("..","Dataset", "processed_superstore.csv")
+    raw_file_path = os.path.join("..", "data_lake", "raw", "superstore.csv")
+    processed_file_path = os.path.join("..", "data_lake", "processed", "processed_superstore.csv")
 
     # Step 1: Ingest
     df = ingest_data(raw_file_path)
