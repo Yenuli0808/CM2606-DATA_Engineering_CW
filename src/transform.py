@@ -32,10 +32,45 @@ def transform_data(df):
     return df
 
 def validate_data(df):
+
+    # Check dataset is not empty
     if df.empty:
         raise ValueError("Dataset is empty!")
-    
-    if df["Sales"].isnull().sum() > 0:
-        raise ValueError("Sales column contain null values!")
-    
-    print("Data validation passed")
+
+    # Check required columns exist
+    required_columns = [
+        "Customer.ID",
+        "Product.ID",
+        "Sales",
+        "Quantity",
+        "Order.Date"
+    ]
+
+    for col in required_columns:
+        if col not in df.columns:
+            raise ValueError(f"Missing required column: {col}")
+
+    # Check for missing values
+    if df.isnull().sum().sum() > 0:
+        raise ValueError("Data contains missing values")
+
+    # Check duplicate rows
+    if df.duplicated().sum() > 0:
+        print("⚠ Warning: duplicate rows detected")
+
+    # Check negative sales values
+    if (df["Sales"] < 0).any():
+        raise ValueError("Negative sales values detected")
+
+    # Check invalid quantity
+    if (df["Quantity"] <= 0).any():
+        raise ValueError("Invalid quantity values detected")
+
+    # Validate order date format
+    df["Order.Date"] = pd.to_datetime(df["Order.Date"], errors="coerce")
+
+    if df["Order.Date"].isnull().any():
+        raise ValueError("Invalid date format detected")
+
+    print("✅ Data validation passed")
+

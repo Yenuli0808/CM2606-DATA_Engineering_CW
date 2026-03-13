@@ -41,3 +41,9 @@
 2026-03-13 18:45:11,245 - INFO - Transformation completed
 2026-03-13 18:45:11,246 - INFO - Data validation completed
 2026-03-13 18:45:15,951 - INFO - Loading completed
+2026-03-13 19:43:02,826 - INFO - Pipeline started
+2026-03-13 19:43:02,844 - INFO - Found credentials from IAM Role: DataPipelineRole
+2026-03-13 19:43:03,493 - INFO - Data ingestion completed
+2026-03-13 19:43:03,623 - INFO - Transformation completed
+2026-03-13 19:43:03,935 - INFO - Data validation completed
+2026-03-13 19:43:08,625 - INFO - Loading completed
