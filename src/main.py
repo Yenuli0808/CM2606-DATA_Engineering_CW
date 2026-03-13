@@ -15,10 +15,12 @@ def run_pipeline():
 
     # Step 1: Ingest
     df = ingest_data(raw_file_path)
+    print(f"Rows ingested: {len(df)}")
     logger.info("Data ingestion completed")
 
     # Step 2: Transform
     df_transformed = transform_data(df)
+    print(f"Rows after transformation: {len(df_transformed)}")
     logger.info("Transformation completed")
 
     # Step 3: Validate
@@ -26,6 +28,7 @@ def run_pipeline():
     logger.info("Data validation completed")
 
     # Step 4: Load
+    print(f"Rows loaded to warehouse: {len(df_transformed)}")
     load_data(df_transformed, processed_file_path)
     logger.info("Loading completed")
 
