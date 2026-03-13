@@ -1,16 +1,21 @@
+import boto3 
 import pandas as pd
+from io import StringIO
 import os
 
-def ingest_data(file_path):
-    """
-    Reads raw CSV file from Dataset folder.
-    Returns pandas DataFrame.
-    """
-    try:
-        df = pd.read_csv(file_path)
-        print("✅ Data successfully ingested.")
-        print(f"Shape: {df.shape}")
-        return df
-    except Exception as e:
-        print("❌ Error during ingestion:", e)
-        raise
+def ingest_data(file_path=None):
+    print("📥 Reading dataset from S3...")
+
+    bucket = "superstore-data-lake-de"
+    key = "raw/superstore.csv"
+
+    s3 = boto3.client("s3")
+
+    obj = s3.get_object(Bucket=bucket, Key=key)
+
+    df = pd.read_csv(obj["Body"])
+
+    print("✅ Data successfully ingested from S3.")
+    print("Shape:", df.shape)
+
+    return df

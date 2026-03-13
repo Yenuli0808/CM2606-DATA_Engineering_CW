@@ -1,4 +1,5 @@
 import pandas as pd
+import boto3
 from sqlalchemy import create_engine, text
 
 def load_data(df, output_path):
@@ -14,6 +15,18 @@ def load_data(df, output_path):
     except Exception as e:
         print("❌ Error saving CSV:", e)
         raise
+   
+    s3 = boto3.client("s3")
+
+    csv_buffer = df.to_csv(index=False)
+
+    s3.put_object(
+        Bucket="superstore-data-lake-de",
+        Key="processed/processed_superstore.csv",
+        Body=csv_buffer
+    )
+
+    print("☁️ Processed data uploaded to S3.")
 
 
     # -----------------------------
@@ -22,7 +35,7 @@ def load_data(df, output_path):
     print("🚀 Loading data into PostgreSQL warehouse...")
 
     engine = create_engine(
-        "postgresql://polaar@localhost:5432/superstore_dw"
+        "postgresql://postgres:postgres123@localhost:5432/superstore_dw"
     )
     # Clear tables before loading
     with engine.connect() as conn:
